@@ -1,0 +1,24 @@
+//
+
+syntax = "proto3";
+
+package crux.iam.v1;
+
+option go_package = "github.com/rez-go/crux-apis/crux/iam/v1;iampb";
+
+import "crux/iam/v1/actor.proto";
+import "google/protobuf/timestamp.proto";
+
+// ActionInfo provides information about an action. Note that not all fields
+// might be provided.
+message ActionInfo {
+  // Who or what performed the action.
+  Actor actor = 1;
+  // When was the action performed.
+  google.protobuf.Timestamp timestamp = 2;
+  // The ID of the request which initiated the action. The value of this
+  // field might not be provided depending on the access context.
+  //
+  // If provided, value must be raw bytes of a UUID v4 instance.
+  bytes request_id = 3;
+}

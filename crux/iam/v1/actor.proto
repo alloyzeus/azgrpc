@@ -1,0 +1,14 @@
+//
+
+syntax = "proto3";
+
+package crux.iam.v1;
+
+option go_package = "github.com/rez-go/crux-apis/crux/iam/v1;iampb";
+
+// Note that not all fields might be provided
+message Actor {
+  Actor assuming_actor = 1;
+  string user_id = 2;
+  string terminal_id = 3;
+}

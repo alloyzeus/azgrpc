@@ -1,0 +1,32 @@
+msc {
+  # User application authorization
+
+  wordwraparcs=true, hscale=1.67;
+
+  user [label="User",
+    textcolor="#FFFFFF", linecolor="#388E3C", textbgcolor="#388E3C", arclinecolor="#388E3C", arctextcolor="#388E3C"],
+  app [label="App (user agent)",
+    textcolor="#FFFFFF", linecolor="#D32F2F", textbgcolor="#D32F2F", arclinecolor="#D32F2F", arctextcolor="#D32F2F"],
+  iam [label="IAM Server",
+    textcolor="#FFFFFF", linecolor="#1976D2", textbgcolor="#1976D2", arclinecolor="#1976D2", arctextcolor="#1976D2"],
+  otpds [label="SMS / Email delivery service",
+    textcolor="#FFFFFF", linecolor="#8E24AA", textbgcolor="#8E24AA", arclinecolor="#8E24AA", arctextcolor="#8E24AA"];
+
+  user => app [label="phone number / email address"];
+  app => iam [label="POST /terminals/register"];
+  iam => otpds [label="OTP delivery request"];
+  iam >> app [label="terminal ID"];
+  otpds -> user [label="OTP"];
+  user => app [label="OTP"];
+  app => iam [label="POST /terminals/secret with terminal ID and OTP"];
+  iam >> app [label="terminal secret"];
+  app => iam [label="POST /oauth/token with terminal ID and terminal secret"];
+  iam >> app [label="bearer access token (JWT)"];
+  --- [label="Ready to make API calls", linecolor="#7f7f7f", textcolor="#7f7f7f"];
+  ...;
+  --- [label="1 minute before access token expiration", linecolor="#7f7f7f", textcolor="#7f7f7f"];
+  app => iam [label="POST /oauth/token with terminal ID and terminal secret"];
+  iam >> app [label="new bearer access token (JWT)"];
+  --- [label="Ready to make more API calls", linecolor="#7f7f7f", textcolor="#7f7f7f"];
+  ...;
+}

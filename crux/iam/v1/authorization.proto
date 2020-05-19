@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package crux.iam.v1;
+
+option go_package = "github.com/rez-go/crux-apis/crux/iam/v1;iampb";
+
+import "google/protobuf/timestamp.proto";
+
+message AuthorizationData {
+  // The other authorization which has been authorized to represent the this
+  // this authorization.
+  AuthorizationData assuming_authorization = 1;
+  // Authorization ID is an identifier of an authorization. It's
+  // unique within the system. It's a session identifier.
+  string authorization_id = 2;
+  // The expiry time of this authorization. Clients are recommended to refresh
+  // the authorization before current authorization expired (~1 minute before
+  // expired).
+  google.protobuf.Timestamp expiry_time = 3;
+  // The ID of the user who granted this authorization, if any.
+  string subject_user_id = 4;
+}

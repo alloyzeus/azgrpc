@@ -1,0 +1,21 @@
+//
+
+syntax = "proto3";
+
+package crux.iam.v1;
+
+option go_package = "github.com/rez-go/crux-apis/crux/iam/v1;iampb";
+
+import "crux/iam/v1/actor.proto";
+import "google/protobuf/timestamp.proto";
+
+// This gives basic information for an event inspired by Five Ws just it
+// doesn't actually give information about what kind of event.
+//
+// Note that not all fields might be provided.
+message EventBase {
+  // The information about anything which triggered the event.
+  crux.iam.v1.Actor actor = 1;
+  // The start time of the event.
+  google.protobuf.Timestamp timestamp = 2;
+}

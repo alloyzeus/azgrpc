@@ -1,0 +1,12 @@
+//
+
+syntax = "proto3";
+
+package crux.iam.v1;
+
+option go_package = "github.com/rez-go/crux-apis/crux/iam/v1;iampb";
+
+message ClientCredentials {
+  string client_id = 1;
+  string client_secret = 2;
+}

@@ -1,0 +1,20 @@
+msc {
+  # Service application authorization
+
+  wordwraparcs=true, hscale=1.67;
+
+  app [label="Service App",
+    textcolor="#FFFFFF", linecolor="#D32F2F", textbgcolor="#D32F2F", arclinecolor="#D32F2F", arctextcolor="#D32F2F"],
+  iam [label="IAM Server",
+    textcolor="#FFFFFF", linecolor="#1976D2", textbgcolor="#1976D2", arclinecolor="#1976D2", arctextcolor="#1976D2"];
+
+  app => iam [label="POST /oauth/token with client credentials"];
+  iam >> app [label="bearer access token (JWT)"];
+  --- [label="Ready to make API calls", linecolor="#7f7f7f", textcolor="#7f7f7f"];
+  ...;
+  --- [label="1 minute before access token expiration", linecolor="#7f7f7f", textcolor="#7f7f7f"];
+  app => iam [label="POST /oauth/token with client credentials"];
+  iam >> app [label="new bearer access token (JWT)"];
+  --- [label="Ready to make more API calls", linecolor="#7f7f7f", textcolor="#7f7f7f"];
+  ...;
+}

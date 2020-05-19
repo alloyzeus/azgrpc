@@ -1,0 +1,8 @@
+build:
+  excludes:
+    - include
+
+lint:
+  use:
+    - BASIC
+    - PACKAGE_AFFINITY

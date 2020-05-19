@@ -1,0 +1,42 @@
+//
+
+syntax = "proto3";
+
+package crux.iam.v1;
+
+option go_package = "github.com/rez-go/crux-apis/crux/iam/v1;iampb";
+
+// Very minimal profile of a user.
+message UserBaseProfileData {
+  string display_name = 1;
+  string profile_image_url = 2;
+}
+
+message UserAccountVerificationData {
+  bool verified = 1;
+}
+
+message UserAccountDeactivationData {
+  bool deactivated = 1;
+}
+
+message UserAccountInfoData {
+  UserAccountVerificationData verification = 3;
+  UserAccountDeactivationData deactivation = 4;
+}
+
+message UserAccountStateData {
+  UserAccountDeactivationData deactivation = 3;
+}
+
+message UserContactInfoData {
+  // User's primary public phone number. This field will only be provided if
+  // the requesting context has permission to access this information.
+  string phone_number = 1;
+}
+
+message UserInfoData {
+  UserAccountInfoData account_info = 2;
+  UserBaseProfileData base_profile = 5;
+  UserContactInfoData contact_info = 6;
+}

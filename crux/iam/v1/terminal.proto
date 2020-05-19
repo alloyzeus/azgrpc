@@ -1,0 +1,58 @@
+//
+
+syntax = "proto3";
+
+package crux.iam.v1;
+
+option go_package = "github.com/rez-go/crux-apis/crux/iam/v1;iampb";
+
+import "crux/iam/v1/authorization.proto";
+import "crux/iam/v1/client.proto";
+import "google/protobuf/timestamp.proto";
+
+message TerminalInfo {
+  // Display name of the instance. Used so the user could identify the
+  // instance. Recommended value is the name of the device or service
+  // instance's unique identifier.
+  string display_name = 3;
+  // User's preferred language if this terminal is an end-user terminal.
+  // Value syntax is same as HTTP's Accept-Language header
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language
+  string accept_language = 6;
+}
+
+service TerminalAuthorizationService {
+  rpc InitiateUserTerminalAuthorizationByPhoneNumber(InitiateUserTerminalAuthorizationByPhoneNumberRequest) returns (InitiateUserTerminalAuthorizationByPhoneNumberResponse);
+  rpc ConfirmTerminalAuthorization(ConfirmTerminalAuthorizationRequest) returns (ConfirmTerminalAuthorizationResponse);
+  rpc GenerateAccessTokenByTerminalCredentials(GenerateAccessTokenByTerminalCredentialsRequest) returns (GenerateAccessTokenByTerminalCredentialsResponse);
+}
+
+message InitiateUserTerminalAuthorizationByPhoneNumberRequest {
+  ClientCredentials client_credentials = 1;
+  TerminalInfo terminal_info = 2;
+  string phone_number = 3;
+}
+
+message InitiateUserTerminalAuthorizationByPhoneNumberResponse {
+  string terminal_id = 1;
+  google.protobuf.Timestamp verification_code_expiry_time = 2;
+}
+
+message ConfirmTerminalAuthorizationRequest {
+  string terminal_id = 1;
+  string verification_code = 2;
+}
+
+message ConfirmTerminalAuthorizationResponse {
+  string terminal_secret = 1;
+}
+
+message GenerateAccessTokenByTerminalCredentialsRequest {
+  string terminal_id = 1;
+  string terminal_secret = 2;
+}
+
+message GenerateAccessTokenByTerminalCredentialsResponse {
+  string access_token = 1;
+  AuthorizationData authorization_data = 2;
+}
