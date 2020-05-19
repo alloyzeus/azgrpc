@@ -1,0 +1,23 @@
+//
+
+syntax = "proto3";
+
+package crux.media.v1;
+
+option go_package = "github.com/rez-go/crux-apis/crux/media/v1;mediapb";
+
+// MediaType is the top-level media type. It roughly follows IANA's media
+// type registry.
+//
+// See IETF RFC 2046
+enum MediaType {
+  // The default value.
+  MEDIA_TYPE_UNSPECIFIED = 0;
+  // Type is unknown. This is usually used for when a process was unable
+  // to determine the type.
+  MEDIA_TYPE_UNKNOWN = 1;
+  TEXT = 4;
+  IMAGE = 5;
+  AUDIO = 6;
+  VIDEO = 7;
+}
