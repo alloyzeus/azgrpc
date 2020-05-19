@@ -49,13 +49,13 @@ proto-zip:
 
 GO_OUT_DIR=$(OUTPUT_BASE_DIR)/go
 GO_PROTOC_CMD=protoc \
-	--gofast_out=plugins=grpc,paths=source_relative,Minclude/google/protobuf/any.proto=github.com/gogo/protobuf/types,Minclude/google/protobuf/duration.proto=github.com/gogo/protobuf/types,Minclude/google/protobuf/struct.proto=github.com/gogo/protobuf/types,Minclude/google/protobuf/timestamp.proto=github.com/gogo/protobuf/types,Minclude/google/protobuf/wrappers.proto=github.com/gogo/protobuf/types:${WORKDIR}/$(GO_OUT_DIR) \
+	--gogofaster_out=plugins=grpc,paths=source_relative,Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:${WORKDIR}/$(GO_OUT_DIR) \
 	-I=/protobuf/include \
 	-I=$(WORKDIR)
 proto-go: _protoc-go
 	@echo "Generating Go codes from proto files..."
-	@rm -rf $(GO_OUT_DIR)
-	@mkdir -p $(GO_OUT_DIR)
+	@rm -rf $(GO_OUT_DIR)/crux
+	@mkdir -p $(GO_OUT_DIR)/crux
 	@docker run --rm \
 		--entrypoint=/bin/sh \
 		-v $(CURDIR):$(WORKDIR) \

@@ -16,7 +16,7 @@ RUN go mod init github.com/rez-go/crux-apis
 
 RUN go get github.com/golang/protobuf/protoc-gen-go
 
-RUN go get github.com/gogo/protobuf/protoc-gen-gofast
+RUN go get github.com/gogo/protobuf/protoc-gen-gogofaster
 
 RUN go get github.com/uber/prototool/cmd/prototool
 
