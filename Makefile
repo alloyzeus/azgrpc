@@ -61,7 +61,8 @@ proto-go: _protoc-go
 		-v $(CURDIR):$(WORKDIR) \
 		--workdir=/go/src \
 		$(GO_PROTOC_IMAGE) -c '\
-		$(GO_PROTOC_CMD) $(WORKDIR)/crux/iam/v1/*.proto'
+		$(GO_PROTOC_CMD) $(WORKDIR)/crux/iam/v1/*.proto && \
+		$(GO_PROTOC_CMD) $(WORKDIR)/crux/media/v1/*.proto'
 	-@git rev-parse HEAD >$(GO_OUT_DIR)/REVISION 2>&1
 	$(eval SHORT_REV := $(shell git rev-parse HEAD | cut -c 1-7))
 	@zip -r generated/crux-apis-go-$(SHORT_REV).zip \
