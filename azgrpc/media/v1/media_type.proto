@@ -2,9 +2,9 @@
 
 syntax = "proto3";
 
-package crux.media.v1;
+package azgrpc.media.v1;
 
-option go_package = "github.com/rez-go/crux-apis/crux/media/v1;mediapb";
+option go_package = "github.com/alloyzeus/go-azgrpc/azgrpc/media/v1;mediapb";
 
 // MediaType is the top-level media type. It roughly follows IANA's media
 // type registry.

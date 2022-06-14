@@ -12,7 +12,7 @@ RUN wget -q -O protoc-temp.zip \
     && rm protoc-temp.zip
 
 WORKDIR /code
-RUN go mod init github.com/rez-go/crux-apis
+RUN go mod init github.com/alloyzeus/go-azgrpc
 
 RUN go get github.com/golang/protobuf/protoc-gen-go
 

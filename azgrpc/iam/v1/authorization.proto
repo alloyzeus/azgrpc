@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package crux.iam.v1;
+package azgrpc.iam.v1;
 
-option go_package = "github.com/rez-go/crux-apis/crux/iam/v1;iampb";
+option go_package = "github.com/alloyzeus/go-azgrpc/azgrpc/iam/v1;iampb";
 
 import "google/protobuf/timestamp.proto";
 

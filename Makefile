@@ -14,7 +14,7 @@ fmt: _protoc-go
 	@echo "Formatting .proto files..."
 	@docker run --rm \
 		-v $(CURDIR):$(WORKDIR) \
-		--workdir=$(WORKDIR)/crux \
+		--workdir=$(WORKDIR)/azgrpc \
 		$(GO_PROTOC_IMAGE) \
 		prototool format -w
 	@echo "Done!"
@@ -43,8 +43,8 @@ proto-zip:
 		mkdir -p $(WORKDIR)/include/google && \
 		cp -r "/protobuf/include/google/protobuf" $(WORKDIR)/include/google/protobuf && \
 		rm -rf $(WORKDIR)/include/google/protobuf/compiler '
-	@zip -r generated/crux-apis-proto-$(SHORT_REV).zip \
-		./crux/ ./include/google/ -x "*.DS_Store" > /dev/null
+	@zip -r generated/azgrpc-proto-$(SHORT_REV).zip \
+		./azgrpc/ ./include/google/ -x "*.DS_Store" > /dev/null
 
 
 GO_OUT_DIR=$(OUTPUT_BASE_DIR)/go
@@ -54,18 +54,18 @@ GO_PROTOC_CMD=protoc \
 	-I=$(WORKDIR)
 proto-go: _protoc-go
 	@echo "Generating Go codes from proto files..."
-	@rm -rf $(GO_OUT_DIR)/crux
-	@mkdir -p $(GO_OUT_DIR)/crux
+	@rm -rf $(GO_OUT_DIR)/azgrpc
+	@mkdir -p $(GO_OUT_DIR)/azgrpc
 	@docker run --rm \
 		--entrypoint=/bin/sh \
 		-v $(CURDIR):$(WORKDIR) \
 		--workdir=/go/src \
 		$(GO_PROTOC_IMAGE) -c '\
-		$(GO_PROTOC_CMD) $(WORKDIR)/crux/iam/v1/*.proto && \
-		$(GO_PROTOC_CMD) $(WORKDIR)/crux/media/v1/*.proto'
+		$(GO_PROTOC_CMD) $(WORKDIR)/azgrpc/iam/v1/*.proto && \
+		$(GO_PROTOC_CMD) $(WORKDIR)/azgrpc/media/v1/*.proto'
 	-@git rev-parse HEAD >$(GO_OUT_DIR)/REVISION 2>&1
 	$(eval SHORT_REV := $(shell git rev-parse HEAD | cut -c 1-7))
-	@zip -r generated/crux-apis-go-$(SHORT_REV).zip \
+	@zip -r generated/azgrpc-go-$(SHORT_REV).zip \
 		./$(GO_OUT_DIR)/ -x "*.DS_Store" > /dev/null
 
 _protoc-go:
