@@ -13,20 +13,19 @@ msc {
     textcolor="#FFFFFF", linecolor="#8E24AA", textbgcolor="#8E24AA", arclinecolor="#8E24AA", arctextcolor="#8E24AA"];
 
   user => app [label="phone number / email address"];
-  app => iam [label="POST /terminals/register"];
+  app => iam [label="POST /terminals/registration"];
   iam => otpds [label="OTP delivery request"];
+  otpds >> iam [label="OK"];
   iam >> app [label="terminal ID"];
-  otpds -> user [label="OTP"];
+  otpds -> user [label="OTP (through other app)"];
   user => app [label="OTP"];
-  app => iam [label="POST /terminals/secret with terminal ID and OTP"];
-  iam >> app [label="terminal secret"];
-  app => iam [label="POST /oauth/token with terminal ID and terminal secret"];
-  iam >> app [label="bearer access token (JWT)"];
+  app => iam [label="POST /oauth/token with terminal ID and OTP"];
+  iam >> app [label="access token (JWT), refresh token (JWT), and terminal secret"];
   --- [label="Ready to make API calls", linecolor="#7f7f7f", textcolor="#7f7f7f"];
   ...;
   --- [label="1 minute before access token expiration", linecolor="#7f7f7f", textcolor="#7f7f7f"];
   app => iam [label="POST /oauth/token with terminal ID and terminal secret"];
-  iam >> app [label="new bearer access token (JWT)"];
+  iam >> app [label="new access token (JWT)"];
   --- [label="Ready to make more API calls", linecolor="#7f7f7f", textcolor="#7f7f7f"];
   ...;
 }
