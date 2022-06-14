@@ -1,2 +1,3 @@
 /generated/*.zip
 /generated/go
+/include/google/protobuf
